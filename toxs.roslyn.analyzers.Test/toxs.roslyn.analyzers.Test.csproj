@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\toxs.roslyn.analyzers.CodeFixes\toxs.roslyn.analyzers.CodeFixes.csproj" />
     <ProjectReference Include="..\toxs.roslyn.analyzers\toxs.roslyn.analyzers.csproj" />
   </ItemGroup>
 

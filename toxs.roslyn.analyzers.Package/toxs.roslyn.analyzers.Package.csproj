@@ -32,7 +32,6 @@ For a list of all the analyzers see http://roslyn-analyzers.readthedocs.io/en/la
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\toxs.roslyn.analyzers.CodeFixes\toxs.roslyn.analyzers.CodeFixes.csproj" />
     <ProjectReference Include="..\toxs.roslyn.analyzers\toxs.roslyn.analyzers.csproj" />
   </ItemGroup>
 
@@ -43,7 +42,6 @@ For a list of all the analyzers see http://roslyn-analyzers.readthedocs.io/en/la
   <Target Name="_AddAnalyzersToOutput">
     <ItemGroup>
       <TfmSpecificPackageFile Include="$(OutputPath)\toxs.roslyn.analyzers.dll" PackagePath="analyzers/dotnet/cs" />
-      <TfmSpecificPackageFile Include="$(OutputPath)\toxs.roslyn.analyzers.CodeFixes.dll" PackagePath="analyzers/dotnet/cs" />
     </ItemGroup>
   </Target>
 

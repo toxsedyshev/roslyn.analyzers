@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "toxs.roslyn.analyzers", "toxs.roslyn.analyzers\toxs.roslyn.analyzers.csproj", "{BC93BCCC-1E8B-479B-9F70-572A11CEAD49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "toxs.roslyn.analyzers", "toxs.roslyn.analyzers\toxs.roslyn.analyzers.csproj", "{BC93BCCC-1E8B-479B-9F70-572A11CEAD49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "toxs.roslyn.analyzers.CodeFixes", "toxs.roslyn.analyzers.CodeFixes\toxs.roslyn.analyzers.CodeFixes.csproj", "{0565C229-5D2A-4727-9AC5-BF05016BF12B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "toxs.roslyn.analyzers.Package", "toxs.roslyn.analyzers.Package\toxs.roslyn.analyzers.Package.csproj", "{284A2555-2255-4B0B-BAF3-49ECEEB44982}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "toxs.roslyn.analyzers.Package", "toxs.roslyn.analyzers.Package\toxs.roslyn.analyzers.Package.csproj", "{284A2555-2255-4B0B-BAF3-49ECEEB44982}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "toxs.roslyn.analyzers.Test", "toxs.roslyn.analyzers.Test\toxs.roslyn.analyzers.Test.csproj", "{D7C983A6-A1C0-48CB-A189-9C24E1B6C5E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "toxs.roslyn.analyzers.Test", "toxs.roslyn.analyzers.Test\toxs.roslyn.analyzers.Test.csproj", "{D7C983A6-A1C0-48CB-A189-9C24E1B6C5E3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "toxs.roslyn.analyzers.Vsix", "toxs.roslyn.analyzers.Vsix\toxs.roslyn.analyzers.Vsix.csproj", "{076C2BBC-BF24-40DD-B2D6-1FDAF509E6BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "toxs.roslyn.analyzers.Vsix", "toxs.roslyn.analyzers.Vsix\toxs.roslyn.analyzers.Vsix.csproj", "{076C2BBC-BF24-40DD-B2D6-1FDAF509E6BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{BC93BCCC-1E8B-479B-9F70-572A11CEAD49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC93BCCC-1E8B-479B-9F70-572A11CEAD49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC93BCCC-1E8B-479B-9F70-572A11CEAD49}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0565C229-5D2A-4727-9AC5-BF05016BF12B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0565C229-5D2A-4727-9AC5-BF05016BF12B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0565C229-5D2A-4727-9AC5-BF05016BF12B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0565C229-5D2A-4727-9AC5-BF05016BF12B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{284A2555-2255-4B0B-BAF3-49ECEEB44982}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{284A2555-2255-4B0B-BAF3-49ECEEB44982}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{284A2555-2255-4B0B-BAF3-49ECEEB44982}.Release|Any CPU.ActiveCfg = Release|Any CPU
