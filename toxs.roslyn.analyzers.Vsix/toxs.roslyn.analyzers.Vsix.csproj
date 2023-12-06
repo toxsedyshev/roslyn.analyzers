@@ -3,7 +3,7 @@
   <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
 
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net481</TargetFramework>
     <RootNamespace>toxs.roslyn.analyzers.Vsix</RootNamespace>
     <AssemblyName>toxs.roslyn.analyzers.Vsix</AssemblyName>
   </PropertyGroup>
