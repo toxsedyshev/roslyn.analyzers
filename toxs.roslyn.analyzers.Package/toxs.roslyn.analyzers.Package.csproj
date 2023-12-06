@@ -10,13 +10,14 @@
   <PropertyGroup>
     <PackageId>toxs.roslyn.analyzers</PackageId>
     <PackageVersion>1.0.0.0</PackageVersion>
-    <Authors>toxs</Authors>
-    <PackageLicenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</PackageLicenseUrl>
-    <PackageProjectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</PackageProjectUrl>
-    <PackageIconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</PackageIconUrl>
-    <RepositoryUrl>http://REPOSITORY_URL_HERE_OR_DELETE_THIS_LINE</RepositoryUrl>
+    <Authors>Eduardo Serrano, toxsedyshev</Authors>
+    <PackageProjectUrl>https://github.com/toxsedyshev/roslyn.analyzers</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/toxsedyshev/roslyn.analyzers</RepositoryUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>toxs.roslyn.analyzers</Description>
+    <Description>Contains a set of useful analyzers for C#. 
+Enum Exhaustive Analizer forces to specify all enum switch cases and default case.
+Fork of the original Roslyn.Analyzers package by Eduardo Serrano.
+For a list of all the analyzers see http://roslyn-analyzers.readthedocs.io/en/latest/analyzers-in-the-repo.html.</Description>
     <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
     <Copyright>Copyright</Copyright>
     <PackageTags>toxs.roslyn.analyzers, analyzers</PackageTags>
@@ -24,6 +25,10 @@
     <NoPackageAnalysis>true</NoPackageAnalysis>
 
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_AddAnalyzersToOutput</TargetsForTfmSpecificContentInPackage>
+
+    <Title>Collection of useful C# analyzers</Title>
+
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
