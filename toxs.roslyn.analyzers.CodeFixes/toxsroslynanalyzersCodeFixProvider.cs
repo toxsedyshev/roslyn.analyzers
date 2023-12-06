@@ -12,6 +12,7 @@ using System.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using toxs.roslyn.analyzers.Enum;
 
 namespace toxs.roslyn.analyzers
 {
@@ -20,7 +21,7 @@ namespace toxs.roslyn.analyzers
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
         {
-            get { return ImmutableArray.Create(toxsroslynanalyzersAnalyzer.DiagnosticId); }
+            get { return ImmutableArray.Create(EnumExhaustiveAnalyzer.DiagnosticId); }
         }
 
         public sealed override FixAllProvider GetFixAllProvider()
