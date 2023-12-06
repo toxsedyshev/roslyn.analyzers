@@ -4,7 +4,7 @@
 
 This repository started as a learning experience about the Roslyn API. Hopefully it will grow to hold many more analyzers.
 
-Enum Exhaustive Analizer forces to specify all enum switch cases and default case.
+Enum Exhaustive Analyzer forces to specify all enum switch cases and default case.
 
 Fork of the original Roslyn.Analyzers package by Eduardo Serrano.
 

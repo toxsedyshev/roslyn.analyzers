@@ -15,7 +15,7 @@
     <RepositoryUrl>https://github.com/toxsedyshev/roslyn.analyzers</RepositoryUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>Contains a set of useful analyzers for C#. 
-Enum Exhaustive Analizer forces to specify all enum switch cases and default case.
+Enum Exhaustive Analyzer forces to specify all enum switch cases and default case.
 Fork of the original Roslyn.Analyzers package by Eduardo Serrano.
 For a list of all the analyzers see http://roslyn-analyzers.readthedocs.io/en/latest/analyzers-in-the-repo.html.</Description>
     <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
