@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Operations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using toxs.roslyn.analyzers.Extensions;
 
 namespace toxs.roslyn.analyzers.PopulateSwitch
@@ -41,32 +42,42 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
             return false;
         }
 
-        public static ICollection<ISymbol> GetMissingEnumMembers(ISwitchOperation switchStatement)
+        public static ICollection<string> GetMissingEnumMembers(ISwitchOperation switchStatement)
         {
             var switchExpression = switchStatement.Value;
             var switchExpressionType = switchExpression?.Type;
-
-            var enumMembers = new Dictionary<long, ISymbol>();
 
             // Check if the type of the expression is a nullable INamedTypeSymbol
             // if the type is both nullable and an INamedTypeSymbol extract the type argument from the nullable
             // and check if it is of enum type
             if (switchExpressionType != null)
+            {
                 switchExpressionType = switchExpressionType.IsNullable(out var underlyingType) ? underlyingType : switchExpressionType;
+            }
 
             if (switchExpressionType?.TypeKind == TypeKind.Enum)
             {
-                if (!TryGetAllEnumMembers(switchExpressionType, enumMembers) ||
-                    !TryRemoveExistingEnumMembers(switchStatement, enumMembers))
+                var enumMembers = new Dictionary<long, string>();
+                if (TryGetAllEnumMembers(switchExpressionType, enumMembers)
+                    && TryRemoveExistingEnumMembers(switchStatement, enumMembers))
                 {
-                    return Array.Empty<ISymbol>();
+                    return enumMembers.Values;
                 }
             }
 
-            return enumMembers.Values;
+            if (switchExpressionType?.SpecialType == SpecialType.System_Boolean)
+            {
+                var enumMembers = BooleanExtensions.CreateBooleanOptions();
+                if (TryRemoveExistingEnumMembers(switchStatement, enumMembers))
+                {
+                    return enumMembers.Values;
+                }
+            }
+
+            return Array.Empty<string>();
         }
 
-        private static bool TryRemoveExistingEnumMembers(ISwitchOperation switchStatement, Dictionary<long, ISymbol> enumValues)
+        private static bool TryRemoveExistingEnumMembers(ISwitchOperation switchStatement, Dictionary<long, string> enumValues)
         {
             foreach (var switchCase in switchStatement.Cases)
             {
@@ -108,7 +119,7 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
 
         public static bool TryGetAllEnumMembers(
             ITypeSymbol enumType,
-            Dictionary<long, ISymbol> enumValues)
+            Dictionary<long, string> enumValues)
         {
             foreach (var member in enumType.GetMembers())
             {
@@ -131,7 +142,7 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
                 var enumValue = IntegerUtilities.ToInt64(fieldSymbol.ConstantValue);
                 if (!enumValues.ContainsKey(enumValue))
                 {
-                    enumValues.Add(enumValue, fieldSymbol);
+                    enumValues.Add(enumValue, fieldSymbol.Name);
                 }
             }
 

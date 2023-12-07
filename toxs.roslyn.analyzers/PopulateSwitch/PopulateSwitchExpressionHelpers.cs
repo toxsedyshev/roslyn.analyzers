@@ -13,7 +13,7 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
 {
     internal static class PopulateSwitchExpressionHelpers
     {
-        public static ICollection<ISymbol> GetMissingEnumMembers(ISwitchExpressionOperation operation)
+        public static ICollection<string> GetMissingMembers(ISwitchExpressionOperation operation)
         {
             var switchExpression = operation.Value;
             var switchExpressionType = switchExpression?.Type;
@@ -22,11 +22,13 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
             // if the type is both nullable and an INamedTypeSymbol extract the type argument from the nullable
             // and check if it is of enum type
             if (switchExpressionType != null)
+            {
                 switchExpressionType = switchExpressionType.IsNullable(out var underlyingType) ? underlyingType : switchExpressionType;
+            }
 
             if (switchExpressionType?.TypeKind == TypeKind.Enum)
             {
-                var enumMembers = new Dictionary<long, ISymbol>();
+                var enumMembers = new Dictionary<long, string>();
                 if (PopulateSwitchStatementHelpers.TryGetAllEnumMembers(switchExpressionType, enumMembers))
                 {
                     RemoveExistingEnumMembers(operation, enumMembers);
@@ -34,11 +36,18 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
                 }
             }
 
-            return Array.Empty<ISymbol>();
+            if (switchExpressionType?.SpecialType == SpecialType.System_Boolean)
+            {
+                var enumMembers = BooleanExtensions.CreateBooleanOptions();
+                RemoveExistingEnumMembers(operation, enumMembers);
+                return enumMembers.Values;
+            }
+
+            return Array.Empty<string>();
         }
 
         private static void RemoveExistingEnumMembers(
-            ISwitchExpressionOperation operation, Dictionary<long, ISymbol> enumMembers)
+            ISwitchExpressionOperation operation, Dictionary<long, string> enumMembers)
         {
             foreach (var arm in operation.Arms)
             {
@@ -50,7 +59,7 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
             }
         }
 
-        private static void HandleBinaryPattern(IBinaryPatternOperation binaryPattern, Dictionary<long, ISymbol> enumMembers)
+        private static void HandleBinaryPattern(IBinaryPatternOperation binaryPattern, Dictionary<long, string> enumMembers)
         {
             if (binaryPattern?.OperatorKind == BinaryOperatorKind.Or)
             {
@@ -62,7 +71,7 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
             }
         }
 
-        private static void RemoveIfConstantPatternHasValue(IOperation operation, Dictionary<long, ISymbol> enumMembers)
+        private static void RemoveIfConstantPatternHasValue(IOperation operation, Dictionary<long, string> enumMembers)
         {
             if (operation is IConstantPatternOperation o && o.Value?.ConstantValue.HasValue == true)
             {

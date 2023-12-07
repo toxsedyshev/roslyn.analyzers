@@ -4,6 +4,7 @@
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Microsoft.CodeAnalysis.Operations;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
@@ -27,7 +28,7 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
 
         protected abstract OperationKind OperationKind { get; }
 
-        protected abstract ICollection<ISymbol> GetMissingEnumMembers(TSwitchOperation operation);
+        protected abstract ICollection<string> GetMissingMembers(TSwitchOperation operation);
         protected abstract bool HasDefaultCase(TSwitchOperation operation);
 
         protected virtual Location GetDiagnosticLocation(TSwitchSyntax switchBlock)
@@ -70,24 +71,41 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
 
         #endregion
 
-        protected abstract INamedTypeSymbol GetEnumType(TSwitchOperation switchOperation);
+        protected abstract ITypeSymbol GetParamType(TSwitchOperation switchOperation);
 
         private bool SwitchIsIncomplete(
             TSwitchOperation operation,
             out bool missingCases, out bool missingDefaultCase)
         {
-            var missingEnumMembers = GetMissingEnumMembers(operation);
+            var paramType = GetParamType(operation);
 
-            missingCases = missingEnumMembers.Count > 0;
+            var hasDefaultCase = HasDefaultCase(operation);
+            var missingMembers = GetMissingMembers(operation);
 
-            var enumType = GetEnumType(operation);
-            if (enumType == null || enumType.TypeKind != TypeKind.Enum)
+            if (paramType.SpecialType == SpecialType.System_Boolean)
             {
-                missingDefaultCase = false;
+                if (missingMembers.Count == 2)
+                {
+                    missingCases = true;
+                    missingDefaultCase = !hasDefaultCase;
+                }
+                else if (missingMembers.Count == 1)
+                {
+                    missingCases = !hasDefaultCase;
+                    missingDefaultCase = !hasDefaultCase;
+                }
+                else
+                {
+                    missingCases = false;
+                    missingDefaultCase = false;
+                }
             }
             else
             {
-                missingDefaultCase = !HasDefaultCase(operation);
+                missingCases = paramType.TypeKind == TypeKind.Enum
+                    ? missingMembers.Count > 0
+                    : false;
+                missingDefaultCase = !hasDefaultCase;
             }
 
             // The switch is incomplete if we're missing any cases or we're missing a default case.

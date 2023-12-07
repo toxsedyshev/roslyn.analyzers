@@ -34,13 +34,13 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
 
         protected sealed override OperationKind OperationKind => OperationKind.SwitchExpression;
 
-        protected sealed override ICollection<ISymbol> GetMissingEnumMembers(ISwitchExpressionOperation operation)
-            => PopulateSwitchExpressionHelpers.GetMissingEnumMembers(operation);
+        protected sealed override ICollection<string> GetMissingMembers(ISwitchExpressionOperation operation)
+            => PopulateSwitchExpressionHelpers.GetMissingMembers(operation);
 
         protected sealed override bool HasDefaultCase(ISwitchExpressionOperation operation)
             => PopulateSwitchExpressionHelpers.HasDefaultCase(operation);
 
-        protected override INamedTypeSymbol GetEnumType(ISwitchExpressionOperation switchOperation)
-            => switchOperation.Value.Type as INamedTypeSymbol;
+        protected override ITypeSymbol GetParamType(ISwitchExpressionOperation switchOperation)
+            => switchOperation.Value.Type;
     }
 }

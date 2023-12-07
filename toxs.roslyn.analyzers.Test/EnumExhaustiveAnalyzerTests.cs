@@ -110,6 +110,59 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
         }
 
         [TestMethod]
+        public async Task Test_SwitchWithOneBoolCaseAndDefault()
+        {
+            var test = @"using System;
+
+namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
+{
+    public class SwitchWithAllCases
+    {
+        public void EnumerationMethod(bool b)
+        {
+            switch (b)
+            {
+                case true:
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+}
+";
+
+            await VerifyCS.VerifyAnalyzerAsync(test, new DiagnosticResult[0]);
+        }
+
+        [TestMethod]
+        public async Task Test_SwitchWithMissingBoolCase()
+        {
+            var test = @"using System;
+
+namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
+{
+    public class SwitchWithAllCases
+    {
+        public void EnumerationMethod(bool b)
+        {
+            switch (b)
+            {
+                case true:
+                    break;
+            }
+        }
+    }
+}
+";
+
+            var expectedDiagnostic = new DiagnosticResult(new PopulateSwitchStatementDiagnosticAnalyzer().Rule)
+                .WithSpan("/0/Test0.cs", 9, 13, 9, 19)
+                .WithSpan(9, 13, 13, 14);
+            await VerifyCS.VerifyAnalyzerAsync(test, expectedDiagnostic);
+        }
+
+        [TestMethod]
         public async Task Test_SwitchWithMissingCase()
         {
             var test = @"using System;

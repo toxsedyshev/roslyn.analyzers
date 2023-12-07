@@ -34,7 +34,7 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
 
         protected sealed override OperationKind OperationKind => OperationKind.Switch;
 
-        protected sealed override ICollection<ISymbol> GetMissingEnumMembers(ISwitchOperation operation)
+        protected sealed override ICollection<string> GetMissingMembers(ISwitchOperation operation)
             => PopulateSwitchStatementHelpers.GetMissingEnumMembers(operation);
 
         protected sealed override bool HasDefaultCase(ISwitchOperation operation)
@@ -43,7 +43,7 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
         protected sealed override Location GetDiagnosticLocation(TSwitchSyntax switchBlock)
             => switchBlock.GetFirstToken().GetLocation();
 
-        protected override INamedTypeSymbol GetEnumType(ISwitchOperation switchOperation)
-            => switchOperation.Value.Type as INamedTypeSymbol;
+        protected override ITypeSymbol GetParamType(ISwitchOperation switchOperation)
+            => switchOperation.Value.Type;
     }
 }
