@@ -12,7 +12,7 @@ using toxs.roslyn.analyzers.Enum;
 namespace toxs.roslyn.analyzers.PopulateSwitch
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public abstract class PopulateSwitchExpressionDiagnosticAnalyzer
+    public class PopulateSwitchExpressionDiagnosticAnalyzer
         : PopulateSwitchExpressionDiagnosticAnalyzer<SwitchExpressionSyntax>
     {
     }

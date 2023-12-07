@@ -66,8 +66,7 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
         {
             if (operation is IConstantPatternOperation o && o.Value?.ConstantValue.HasValue == true)
             {
-
-                enumMembers.Remove(IntegerUtilities.ToInt64(o.Value.ConstantValue));
+                enumMembers.Remove(IntegerUtilities.ToInt64(o.Value.ConstantValue.Value));
             }
         }
 
