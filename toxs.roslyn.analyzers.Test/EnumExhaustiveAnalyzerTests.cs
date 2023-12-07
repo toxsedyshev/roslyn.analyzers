@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using toxs.roslyn.analyzers.Enum;
-using VerifyCS = toxs.roslyn.analyzers.Test.CSharpAnalyzerVerifier<toxs.roslyn.analyzers.Enum.EnumExhaustiveAnalyzer>;
+using VerifyCS = toxs.roslyn.analyzers.Test.CSharpAnalyzerVerifier<toxs.roslyn.analyzers.PopulateSwitch.PopulateSwitchStatementDiagnosticAnalyzer>;
 
 namespace toxs.roslyn.analyzers.Test
 {
@@ -81,7 +81,8 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
 
             var expectedDiagnostic = new DiagnosticResult(EnumExhaustiveAnalyzer.Rule)
                 .WithSeverity(DiagnosticSeverity.Warning)
-                .WithSpan("/0/Test0.cs", 9, 13, 9, 19);
+                .WithSpan("/0/Test0.cs", 9, 13, 9, 19)
+                .WithSpan(9, 13, 17, 14);
             await VerifyCS.VerifyAnalyzerAsync(test, expectedDiagnostic);
         }
 
@@ -117,7 +118,8 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
 
             var expectedDiagnostic = new DiagnosticResult(EnumExhaustiveAnalyzer.Rule)
                 .WithSeverity(DiagnosticSeverity.Warning)
-                .WithSpan("/0/Test0.cs", 7, 13, 7, 19);
+                .WithSpan("/0/Test0.cs", 7, 13, 7, 19)
+                .WithSpan(7, 13, 15, 14);
             await VerifyCS.VerifyAnalyzerAsync(test, expectedDiagnostic);
         }
     }
