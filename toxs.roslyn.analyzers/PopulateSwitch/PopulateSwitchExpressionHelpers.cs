@@ -73,13 +73,39 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
         public static bool HasDefaultCase(ISwitchExpressionOperation operation)
             => operation.Arms.Any(a => IsDefault(a));
 
-        public static bool IsDefault(ISwitchExpressionArmOperation arm)
-        {
-            if (arm.Pattern.Kind == OperationKind.DiscardPattern)
-                return true;
+        public static bool IsDefault(this ISwitchExpressionArmOperation arm)
+            => arm.Pattern.IsDefault();
 
-            if (arm.Pattern is IDeclarationPatternOperation declarationPattern)
+        public static bool IsDefault(this IPatternOperation pattern)
+        {
+            // _ => ...
+            if (pattern is IDiscardPatternOperation)
+            {
+                return true;
+            }
+
+            // var v => ...
+            if (pattern is IDeclarationPatternOperation declarationPattern)
+            {
                 return declarationPattern.MatchesNull;
+            }
+
+            if (pattern is IBinaryPatternOperation binaryPattern)
+            {
+                if (binaryPattern.OperatorKind == BinaryOperatorKind.Or)
+                {
+                    // x or _ => ...
+                    return IsDefault(binaryPattern.LeftPattern) || IsDefault(binaryPattern.RightPattern);
+                }
+
+                if (binaryPattern.OperatorKind == BinaryOperatorKind.And)
+                {
+                    // _ and var x => ...
+                    return IsDefault(binaryPattern.LeftPattern) && IsDefault(binaryPattern.RightPattern);
+                };
+
+                return false;
+            }
 
             return false;
         }
