@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <PackageId>toxs.roslyn.analyzers</PackageId>
-    <PackageVersion>1.0.3.0</PackageVersion>
+    <PackageVersion>1.0.4.0</PackageVersion>
     <Authors>Microsoft, Eduardo Serrano, toxsedyshev</Authors>
     <PackageProjectUrl>https://github.com/toxsedyshev/roslyn.analyzers</PackageProjectUrl>
     <RepositoryUrl>https://github.com/toxsedyshev/roslyn.analyzers</RepositoryUrl>
