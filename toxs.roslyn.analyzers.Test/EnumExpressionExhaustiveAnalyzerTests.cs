@@ -45,6 +45,38 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
         }
 
         [TestMethod]
+        public async Task Test_SwitchWithAllCasesGrouped()
+        {
+            var test = @"using System;
+
+namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
+{
+    public class SwitchWithAllCases
+    {
+        public void EnumerationMethod(CarModels carModel)
+        {
+            _ = carModel switch
+            {
+                CarModels.Ferrari or CarModels.Lamborghini 
+                or CarModels.Mercedes => 1,
+                _ => throw new ArgumentOutOfRangeException(nameof(carModel), carModel, null),
+            };
+        }
+
+        public enum CarModels
+        {
+            Ferrari,
+            Lamborghini,
+            Mercedes
+        }
+    }
+}
+";
+
+            await VerifyCS.VerifyAnalyzerAsync(test, new DiagnosticResult[0]);
+        }
+
+        [TestMethod]
         public async Task Test_SwitchWithMissingCase()
         {
             var test = @"using System;
@@ -74,9 +106,42 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
 ";
 
             var expectedDiagnostic = new DiagnosticResult(new PopulateSwitchExpressionDiagnosticAnalyzer().Rule)
-                .WithSeverity(DiagnosticSeverity.Warning)
                 .WithSpan("/0/Test0.cs", 9, 17, 14, 14)
                 .WithSpan(9, 17, 14, 14);
+            await VerifyCS.VerifyAnalyzerAsync(test, expectedDiagnostic);
+        }
+
+        [TestMethod]
+        public async Task Test_SwitchWithMissingCaseGrouped()
+        {
+            var test = @"using System;
+
+namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
+{
+    public class SwitchWithMissingCase
+    {
+        public void EnumerationMethod(CarModels carModel)
+        {
+            _ = carModel switch
+            {
+                CarModels.Ferrari or CarModels.Lamborghini => 1,
+                _ => throw new ArgumentOutOfRangeException(nameof(carModel), carModel, null),
+            };
+        }
+
+        public enum CarModels
+        {
+            Ferrari,
+            Lamborghini,
+            Mercedes
+        }
+    }
+}
+";
+
+            var expectedDiagnostic = new DiagnosticResult(new PopulateSwitchExpressionDiagnosticAnalyzer().Rule)
+                .WithSpan("/0/Test0.cs", 9, 17, 13, 14)
+                .WithSpan(9, 17, 13, 14);
             await VerifyCS.VerifyAnalyzerAsync(test, expectedDiagnostic);
         }
 
@@ -108,7 +173,6 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
 ";
 
             var expectedDiagnostic = new DiagnosticResult(new PopulateSwitchExpressionDiagnosticAnalyzer().Rule)
-                .WithSeverity(DiagnosticSeverity.Warning)
                 .WithSpan("/0/Test0.cs", 7, 17, 12, 14)
                 .WithSpan(7, 17, 12, 14);
             await VerifyCS.VerifyAnalyzerAsync(test, expectedDiagnostic);
