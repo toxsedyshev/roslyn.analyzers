@@ -4,12 +4,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using toxs.roslyn.analyzers.Enum;
 using toxs.roslyn.analyzers.PopulateSwitch;
-using VerifyCS = toxs.roslyn.analyzers.Test.CSharpAnalyzerVerifier<toxs.roslyn.analyzers.PopulateSwitch.PopulateSwitchStatementDiagnosticAnalyzer>;
+using VerifyCS = toxs.roslyn.analyzers.Test.CSharpAnalyzerVerifier<toxs.roslyn.analyzers.PopulateSwitch.PopulateSwitchExpressionDiagnosticAnalyzer>;
 
 namespace toxs.roslyn.analyzers.Test
 {
     [TestClass]
-    public class EnumExhaustiveAnalyzerTests
+    public class EnumExpressionExhaustiveAnalyzerTests
     {
         [TestMethod]
         public async Task Test_SwitchWithAllCases()
@@ -22,17 +22,13 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
     {
         public void EnumerationMethod(CarModels carModel)
         {
-            switch (carModel)
+            _ = carModel switch
             {
-                case CarModels.Ferrari:
-                    break;
-                case CarModels.Lamborghini:
-                    break;
-                case CarModels.Mercedes:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(carModel), carModel, null);
-            }
+                CarModels.Ferrari => 1,
+                CarModels.Lamborghini => 2,
+                CarModels.Mercedes => 3,
+                _ => throw new ArgumentOutOfRangeException(nameof(carModel), carModel, null),
+            };
         }
 
         public enum CarModels
@@ -59,15 +55,12 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
     {
         public void EnumerationMethod(CarModels carModel)
         {
-            switch (carModel)
+            _ = carModel switch
             {
-                case CarModels.Ferrari:
-                case CarModels.Lamborghini:
-                case CarModels.Mercedes:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(carModel), carModel, null);
-            }
+                CarModels.Ferrari or CarModels.Lamborghini 
+                or CarModels.Mercedes => 1,
+                _ => throw new ArgumentOutOfRangeException(nameof(carModel), carModel, null),
+            };
         }
 
         public enum CarModels
@@ -94,15 +87,12 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
     {
         public void EnumerationMethod(CarModels carModel)
         {
-            switch (carModel)
+            _ = carModel switch
             {
-                case CarModels.Ferrari:
-                    break;
-                case CarModels.Lamborghini:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(carModel), carModel, null);
-            }
+                CarModels.Ferrari => 1,
+                CarModels.Lamborghini => 2,
+                _ => throw new ArgumentOutOfRangeException(nameof(carModel), carModel, null),
+            };
         }
 
         public enum CarModels
@@ -115,9 +105,9 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
 }
 ";
 
-            var expectedDiagnostic = new DiagnosticResult(new PopulateSwitchStatementDiagnosticAnalyzer().Rule)
-                .WithSpan("/0/Test0.cs", 9, 13, 9, 19)
-                .WithSpan(9, 13, 17, 14);
+            var expectedDiagnostic = new DiagnosticResult(new PopulateSwitchExpressionDiagnosticAnalyzer().Rule)
+                .WithSpan("/0/Test0.cs", 9, 17, 14, 14)
+                .WithSpan(9, 17, 14, 14);
             await VerifyCS.VerifyAnalyzerAsync(test, expectedDiagnostic);
         }
 
@@ -132,14 +122,11 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
     {
         public void EnumerationMethod(CarModels carModel)
         {
-            switch (carModel)
+            _ = carModel switch
             {
-                case CarModels.Ferrari:
-                case CarModels.Lamborghini:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(carModel), carModel, null);
-            }
+                CarModels.Ferrari or CarModels.Lamborghini => 1,
+                _ => throw new ArgumentOutOfRangeException(nameof(carModel), carModel, null),
+            };
         }
 
         public enum CarModels
@@ -152,9 +139,9 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
 }
 ";
 
-            var expectedDiagnostic = new DiagnosticResult(new PopulateSwitchStatementDiagnosticAnalyzer().Rule)
-                .WithSpan("/0/Test0.cs", 9, 13, 9, 19)
-                .WithSpan(9, 13, 16, 14);
+            var expectedDiagnostic = new DiagnosticResult(new PopulateSwitchExpressionDiagnosticAnalyzer().Rule)
+                .WithSpan("/0/Test0.cs", 9, 17, 13, 14)
+                .WithSpan(9, 17, 13, 14);
             await VerifyCS.VerifyAnalyzerAsync(test, expectedDiagnostic);
         }
 
@@ -167,15 +154,12 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
     {
         public void EnumerationMethod(CarModels carModel)
         {
-            switch (carModel)
+            _ = carModel switch
             {
-                case CarModels.Ferrari:
-                    break;
-                case CarModels.Lamborghini:
-                    break;
-                case CarModels.Mercedes:
-                    break;
-            }
+                CarModels.Ferrari => 1,
+                CarModels.Lamborghini => 2,
+                CarModels.Mercedes => 3,
+            };
         }
 
         public enum CarModels
@@ -188,9 +172,9 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
 }
 ";
 
-            var expectedDiagnostic = new DiagnosticResult(new PopulateSwitchStatementDiagnosticAnalyzer().Rule)
-                .WithSpan("/0/Test0.cs", 7, 13, 7, 19)
-                .WithSpan(7, 13, 15, 14);
+            var expectedDiagnostic = new DiagnosticResult(new PopulateSwitchExpressionDiagnosticAnalyzer().Rule)
+                .WithSpan("/0/Test0.cs", 7, 17, 12, 14)
+                .WithSpan(7, 17, 12, 14);
             await VerifyCS.VerifyAnalyzerAsync(test, expectedDiagnostic);
         }
     }
