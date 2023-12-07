@@ -84,6 +84,32 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
         }
 
         [TestMethod]
+        public async Task Test_SwitchWithAllBoolCases()
+        {
+            var test = @"using System;
+
+namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
+{
+    public class SwitchWithAllCases
+    {
+        public void EnumerationMethod(bool b)
+        {
+            switch (b)
+            {
+                case true:
+                    break;
+                case false:
+                    break;
+            }
+        }
+    }
+}
+";
+
+            await VerifyCS.VerifyAnalyzerAsync(test, new DiagnosticResult[0]);
+        }
+
+        [TestMethod]
         public async Task Test_SwitchWithMissingCase()
         {
             var test = @"using System;

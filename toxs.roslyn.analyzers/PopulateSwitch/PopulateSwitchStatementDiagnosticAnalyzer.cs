@@ -42,5 +42,8 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
 
         protected sealed override Location GetDiagnosticLocation(TSwitchSyntax switchBlock)
             => switchBlock.GetFirstToken().GetLocation();
+
+        protected override INamedTypeSymbol GetEnumType(ISwitchOperation switchOperation)
+            => switchOperation.Value.Type as INamedTypeSymbol;
     }
 }

@@ -70,6 +70,8 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
 
         #endregion
 
+        protected abstract INamedTypeSymbol GetEnumType(TSwitchOperation switchOperation);
+
         private bool SwitchIsIncomplete(
             TSwitchOperation operation,
             out bool missingCases, out bool missingDefaultCase)
@@ -77,7 +79,16 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
             var missingEnumMembers = GetMissingEnumMembers(operation);
 
             missingCases = missingEnumMembers.Count > 0;
-            missingDefaultCase = !HasDefaultCase(operation);
+
+            var enumType = GetEnumType(operation);
+            if (enumType == null || enumType.TypeKind != TypeKind.Enum)
+            {
+                missingDefaultCase = false;
+            }
+            else
+            {
+                missingDefaultCase = !HasDefaultCase(operation);
+            }
 
             // The switch is incomplete if we're missing any cases or we're missing a default case.
             return missingDefaultCase || missingCases;

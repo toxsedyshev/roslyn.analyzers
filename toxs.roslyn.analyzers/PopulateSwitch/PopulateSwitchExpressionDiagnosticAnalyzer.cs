@@ -39,5 +39,8 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
 
         protected sealed override bool HasDefaultCase(ISwitchExpressionOperation operation)
             => PopulateSwitchExpressionHelpers.HasDefaultCase(operation);
+
+        protected override INamedTypeSymbol GetEnumType(ISwitchExpressionOperation switchOperation)
+            => switchOperation.Value.Type as INamedTypeSymbol;
     }
 }
