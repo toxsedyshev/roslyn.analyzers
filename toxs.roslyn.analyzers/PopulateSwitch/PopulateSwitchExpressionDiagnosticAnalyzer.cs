@@ -28,7 +28,7 @@ namespace toxs.roslyn.analyzers.PopulateSwitch
             Title,
             MessageFormat,
             DiagnosticCategories.Maintainability,
-            DiagnosticSeverity.Warning,
+            DiagnosticSeverity.Error,
             isEnabledByDefault: true);
 
 
