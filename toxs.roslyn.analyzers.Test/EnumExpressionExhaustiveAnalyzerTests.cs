@@ -57,9 +57,9 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
         {
             _ = carModel switch
             {
-                CarModels.Ferrari or CarModels.Lamborghini 
+                CarModels.Ferrari
                 or CarModels.Mercedes => 1,
-                _ => throw new ArgumentOutOfRangeException(nameof(carModel), carModel, null),
+                CarModels.Lamborghini or _ => throw new ArgumentOutOfRangeException(nameof(carModel), carModel, null),
             };
         }
 

@@ -63,8 +63,8 @@ namespace TestData.Enums.SwitchOnEnumMustHandleAllCases.DiagnosticAnalyzer
             {
                 case CarModels.Ferrari:
                 case CarModels.Lamborghini:
-                case CarModels.Mercedes:
                     break;
+                case CarModels.Mercedes:
                 default:
                     throw new ArgumentOutOfRangeException(nameof(carModel), carModel, null);
             }
