@@ -9,15 +9,17 @@
 
   <PropertyGroup>
     <PackageId>toxs.roslyn.analyzers</PackageId>
-    <PackageVersion>1.0.2.0</PackageVersion>
-    <Authors>Eduardo Serrano, toxsedyshev</Authors>
+    <PackageVersion>1.0.3.0</PackageVersion>
+    <Authors>Microsoft, Eduardo Serrano, toxsedyshev</Authors>
     <PackageProjectUrl>https://github.com/toxsedyshev/roslyn.analyzers</PackageProjectUrl>
     <RepositoryUrl>https://github.com/toxsedyshev/roslyn.analyzers</RepositoryUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>Contains a set of useful analyzers for C#. 
-Enum Exhaustive Analyzer forces to specify all enum switch cases and default case.
-Fork of the original Roslyn.Analyzers package by Eduardo Serrano.
-For a list of all the analyzers see http://roslyn-analyzers.readthedocs.io/en/latest/analyzers-in-the-repo.html.</Description>
+    <Description>
+		Contains a set of useful analyzers for C#.
+		Pupulate Switch Enum Exhaustive Analyzer forces to specify all enum switch cases and default case for both switch statements and expressions.
+		Based on both default Roslyn Analyzers by MS and Roslyn.Analyzers package by Eduardo Serrano.
+		For a list of all the analyzers see http://roslyn-analyzers.readthedocs.io/en/latest/analyzers-in-the-repo.html.
+    </Description>
     <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
     <Copyright>Copyright</Copyright>
     <PackageTags>toxs.roslyn.analyzers, analyzers</PackageTags>

@@ -2,11 +2,11 @@
 
 [![nuget package](https://img.shields.io/nuget/v/toxs.roslyn.analyzers.svg?style=flat)](https://www.nuget.org/packages/toxs.roslyn.analyzers/) [![licence](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/toxsedyshev/roslyn.analyzers/blob/master/LICENSE.txt)
 
-This repository started as a learning experience about the Roslyn API. Hopefully it will grow to hold many more analyzers.
+Contains a set of useful analyzers for C#.
 
-Enum Exhaustive Analyzer forces to specify all enum switch cases and default case.
+- Pupulate Switch Enum Exhaustive Analyzer forces to specify all enum switch cases and default case for both switch statements and expressions.
 
-Fork of the original Roslyn.Analyzers package by Eduardo Serrano.
+Based on both default Roslyn Analyzers by MS and Roslyn.Analyzers package by Eduardo Serrano.
 
 For a list of all the analyzers see <http://roslyn-analyzers.readthedocs.io/en/latest/analyzers-in-the-repo.html>.
 
